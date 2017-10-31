@@ -12,7 +12,7 @@ public class MainVerticle extends AbstractVerticle {
   public void start() {
     vertx.createHttpServer()
         .requestHandler(req -> {
-          log.debug("request host: " + req.host());
+          log.info("request host: " + req.host());
           req.response().end("Hello Vert.x!");
         })
         .listen(8080);
