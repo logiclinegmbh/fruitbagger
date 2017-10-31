@@ -18,6 +18,12 @@ def doOnChange = './gradlew classes'
 
 dependencies {
   compile "io.vertx:vertx-core:$vertxVersion"
+  // https://mvnrepository.com/artifact/io.crossbar.autobahn/autobahn-java
+  compile group: 'io.crossbar.autobahn', name: 'autobahn-java', version: '17.10.4'
+  // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+  compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+  // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
+  compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.9.1'
   testCompile "junit:junit:4.12"
   testCompile "io.vertx:vertx-unit:$vertxVersion"
 }
