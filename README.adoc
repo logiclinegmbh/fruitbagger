@@ -1,3 +1,6 @@
+= Mongo in docker
+sudo docker run -d -p 27017:27017 --name mongo mongo
+
 = Vert.x Gradle Starter
 
 This project is a template to start your own Vert.x project using Gradle.
@@ -87,3 +90,4 @@ The whole configuration for this is rather simple:
     run {
         args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
     }
+
