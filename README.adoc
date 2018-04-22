@@ -1,3 +1,7 @@
+= Fruit bagging challenge
+
+Credits to: https://codegolf.stackexchange.com/questions/162453/fruit-bagging-factory
+
 = Mongo in docker
 
 - Start container: sudo docker run -d -p 27017:27017 --name mongo mongo

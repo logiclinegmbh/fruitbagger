@@ -5,10 +5,7 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.auth.oauth2.providers.GithubAuth;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.handler.CookieHandler;
-import io.vertx.ext.web.handler.OAuth2AuthHandler;
-import io.vertx.ext.web.handler.SessionHandler;
-import io.vertx.ext.web.handler.UserSessionHandler;
+import io.vertx.ext.web.handler.*;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import io.vertx.ext.web.templ.HandlebarsTemplateEngine;
 import org.mongodb.morphia.Datastore;
@@ -41,6 +38,21 @@ public class MainVerticle extends AbstractVerticle {
     OAuth2Auth authProvider = GithubAuth.create(vertx, env.get("CLIENT_ID"), env.get("CLIENT_SECRET"));
     // We need a user session handler too to make sure the user is stored in the session between requests
     router.route().handler(UserSessionHandler.create(authProvider));
+
+    router.route("/static/*").handler(StaticHandler.create().setCachingEnabled(false));
+
+    router.route("/").handler(ctx -> {
+      engine.render(ctx, "views", "/index.hbs", res3 -> {
+        if (res3.succeeded()) {
+          ctx.response()
+            .putHeader("Content-Type", "text/html")
+            .end(res3.result());
+        } else {
+          ctx.fail(res3.cause());
+        }
+      });
+    });
+
     // we now protect the resource under the path "/protected"
     router.route("/profile").handler(
       OAuth2AuthHandler.create(authProvider)
