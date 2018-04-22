@@ -9,39 +9,56 @@
 </head>
 <body>
 <h1>Welcome, fruitbagger {{email}}</h1>
-<p>Your API key is: {{uuid}}</p>
+
 <p>
-  <a href="/profile/resetapikey">Reset my api key</a>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseKey"
+          aria-expanded="false" aria-controls="collapseExample">
+    API key
+  </button>
 </p>
-<p>Always set this api key as http header "auth: {{uuid}}"</p>
-<h2>Starting a fruit bagging session</h2>
-<p>Use this api key to start a fruit bagging session under</p>
-<p>POST /api/session</p>
-<p>This will return a session id</p>
-<p></p>
-<h2>Retrieve a juicy fruit</h2>
-<p>Use the session id to get the next fruit under</p>
-<p>GET /api/fruits/{session-id}</p>
-<p>This will return a JSON object containing the fruit's index in the total queue and the fruit's weight in g: { "23":
-  172 }</p>
-<p></p>
-<p>Be aware that this will return a HTTP 400 error when you exceeded your lookahead, dear fruitbagger!</p>
-<h2>Open a new fruit bag</h2>
-<p>Now you can start bagging the fruit by first opening a bag:</p>
-<p>POST /api/bag/{session-id}</p>
-<p>This will return a bag id :-)</p>
-<p></p>
-<h2>Bag the juicy fruits</h2>
-<p>Now you can bag fruits into the bag using the fruit index and the bag id:</p>
-<p>POST /api/bagging/{session-id}/{bag-id}/{index}</p>
-<p>This will pack the fruit into the bag!</p>
-<p></p>
-<h2>Close a bag</h2>
-<p>When the bag is full, be sure to close the bag before opening a new one:</p>
-<p>PUT /api/bag/{bag-id}</p>
-<p>Keep in mind that this will return a HTTP 400 error when the bag weighs less than the required minimum weight!</p>
-<h2>Close the session</h2>
-<p>When you have packed all fruits into bags, close your session:</p>
-<p>PUT api/session/{session-id}</p>
+<div class="collapse" id="collapseKey">
+  <div class="card card-body">
+    <p>Your API key is: {{uuid}}</p>
+    <p>
+      <a href="/profile/resetapikey">Reset my api key</a>
+    </p>
+    <p>Always set this api key as http header "auth: {{uuid}}"</p>
+  </div>
+</div>
+
+<p>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseApi"
+          aria-expanded="false" aria-controls="collapseExample">
+    API instructions
+  </button>
+</p>
+<div class="collapse" id="collapseApi">
+  <div class="card card-body">
+    {{> api}}
+  </div>
+</div>
+
+<p>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseSessions"
+          aria-expanded="false" aria-controls="collapseExample">
+    My sessions
+  </button>
+</p>
+<div class="collapse" id="collapseSessions">
+  <div class="card card-body">
+    tbd
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
 </body>
 </html>

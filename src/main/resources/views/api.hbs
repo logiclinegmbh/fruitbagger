@@ -1,0 +1,29 @@
+<h2>Starting a fruit bagging session</h2>
+<p>Use this api key to start a fruit bagging session under</p>
+<p>POST /api/session</p>
+<p>This will return a session id</p>
+<p></p>
+<h2>Retrieve a juicy fruit</h2>
+<p>Use the session id to get the next fruit under</p>
+<p>GET /api/fruits/{session-id}</p>
+<p>This will return a JSON object containing the fruit's index in the total queue and the fruit's weight in g: { "23":
+  172 }</p>
+<p></p>
+<p>Be aware that this will return a HTTP 400 error when you exceeded your lookahead, dear fruitbagger!</p>
+<h2>Open a new fruit bag</h2>
+<p>Now you can start bagging the fruit by first opening a bag:</p>
+<p>POST /api/bag/{session-id}</p>
+<p>This will return a bag id :-)</p>
+<p></p>
+<h2>Bag the juicy fruits</h2>
+<p>Now you can bag fruits into the bag using the fruit index and the bag id:</p>
+<p>POST /api/bagging/{session-id}/{bag-id}/{index}</p>
+<p>This will pack the fruit into the bag!</p>
+<p></p>
+<h2>Close a bag</h2>
+<p>When the bag is full, be sure to close the bag before opening a new one:</p>
+<p>PUT /api/bag/{bag-id}</p>
+<p>Keep in mind that this will return a HTTP 400 error when the bag weighs less than the required minimum weight!</p>
+<h2>Close the session</h2>
+<p>When you have packed all fruits into bags, close your session:</p>
+<p>PUT api/session/{session-id}</p>
