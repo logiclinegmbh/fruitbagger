@@ -57,7 +57,7 @@ public class MainVerticle extends AbstractVerticle {
 
     // we now protect the resource under the path "/protected"
     router.route("/profile").handler(
-      OAuth2AuthHandler.create(authProvider)
+      OAuth2AuthHandler.create(authProvider,env.get("OAUTH_GITHUB_CALLBACK_URL"))
         // we now configure the oauth2 handler, it will setup the callback handler
         // as expected by your oauth2 provider.
         .setupCallback(router.route("/callback"))
