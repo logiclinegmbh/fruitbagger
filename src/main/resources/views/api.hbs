@@ -9,7 +9,8 @@
 <p>This will return a JSON object containing the fruit's index in the total queue and the fruit's weight in g:
 <pre>{ "23":  172 }</pre>
 </p>
-<p>Be aware that this will return a HTTP 400 error when you exceeded your lookahead, dear fruitbagger!</p>
+<p>Be aware that this will return a HTTP 400 error when you exceeded your lookahead and a HTTP 204 error if you've
+    already taken out all the fruits, dear fruitbagger!</p>
 <h2>Open a new fruit bag</h2>
 <p>Now you can start bagging the fruit by first opening a bag:</p>
 <pre>POST /api/bag/{session-id}</pre>
