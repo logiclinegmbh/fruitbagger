@@ -1,6 +1,7 @@
 package de.logicline.fruitbagger;
 
 import de.logicline.fruitbagger.domain.FruitBag;
+import de.logicline.fruitbagger.domain.FruitQueue;
 import de.logicline.fruitbagger.domain.FruitUser;
 import de.logicline.fruitbagger.domain.Session;
 import io.vertx.core.Handler;
@@ -45,8 +46,11 @@ public class BagCloseHandler implements Handler<RoutingContext> {
             return;
         }
         Set<Integer> fruitIds = bag.getFruits();
-
-        if (bag.getFruits().stream().mapToInt(Integer::intValue).sum() > 1000) {
+        int sum = 0;
+        for (Integer fruitId : fruitIds) {
+            sum += FruitQueue.QUEUE[fruitId];
+        }
+        if (sum < 1000) {
             ctx.fail(new Exception("Bag weight is below 1000 grams!!!!"));
             return;
         }
