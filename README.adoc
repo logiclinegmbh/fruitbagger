@@ -14,6 +14,7 @@ Credits to: https://codegolf.stackexchange.com/questions/162453/fruit-bagging-fa
 2. github oauth application secret must be set as CLIENT_SECRET
 3. mongodb host as MONGO_HOST (locally use: 0.0.0.0:27017)
 4. mongodb db name as MONGO_DBNAME
+5. port to listen as PORT
 
 == Prerequisites
 

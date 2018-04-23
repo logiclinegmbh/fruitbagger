@@ -26,7 +26,8 @@ public class MainVerticle extends AbstractVerticle {
     final Map<String, String> env = System.getenv();
     final Morphia morphia = new Morphia();
     morphia.mapPackage("de.logicline.fruitbagger.domain");
-    final Datastore datastore = morphia.createDatastore(new MongoClient(env.get("MONGO_HOST")), env.get("MONGO_DBNAME"));
+    MongoClient mongoClient = new MongoClient(env.get("MONGODB_URI"));
+    final Datastore datastore = morphia.createDatastore(mongoClient, env.get("MONGO_DBNAME"));
     datastore.ensureIndexes();
 
     // to organize our code in a reusable way.
@@ -77,6 +78,6 @@ public class MainVerticle extends AbstractVerticle {
 
     router.route().failureHandler(new FailureHandler());
 
-    vertx.createHttpServer().requestHandler(router::accept).listen(8080);
+    vertx.createHttpServer().requestHandler(router::accept).listen(Integer.valueOf(env.get("PORT")));
   }
 }

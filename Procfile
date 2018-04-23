@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dhttp.port=$PORT -jar fruitbagger/build/libs/fruitbagger-*-fat.jar
+web: java $JAVA_OPTS -Dhttp.port=$PORT -jar app.jar
