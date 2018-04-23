@@ -49,15 +49,6 @@ task wrapper(type: Wrapper) {
   gradleVersion = '4.0'
 }
 
-task stage(type: Copy, dependsOn: [shadowJar, build]) {
-  from 'build/libs/fruitbagger-1.0-fat.jar'
-  into project.rootDir
-  rename {
-    'app.jar'
-  }
-}
-stage.mustRunAfter(shadowJar)
-
-clean.doLast{
-  project.file('app.jar').delete()
+task stage {
+  dependsOn shadowJar
 }
