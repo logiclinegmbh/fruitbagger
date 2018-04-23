@@ -46,6 +46,11 @@ public class RetrieveFruitHandler implements Handler<RoutingContext> {
             return;
         }
 
+        if (currentIndex >= FruitQueue.QUEUE.length) {
+            ctx.fail(204);
+            return;
+        }
+
         Integer weight = FruitQueue.QUEUE[currentIndex];
         fruitSession.incrementIndex();
         datastore.save(fruitSession);
