@@ -21,6 +21,8 @@ public class Session {
 
   private Integer lookAhead;
 
+  private Integer bagCount;
+
   public static Session create(FruitUser user, Integer number){
     Session newSession = new Session();
     newSession.id = new ObjectId();
@@ -64,7 +66,15 @@ public class Session {
     return number;
   }
 
+  public Integer getBagCount() {
+    return bagCount;
+  }
+
   public void closeNow(){
     this.finishDate = Date.from(Instant.now());
+  }
+
+  public void setBagCount(int bagCount) {
+    this.bagCount = bagCount;
   }
 }

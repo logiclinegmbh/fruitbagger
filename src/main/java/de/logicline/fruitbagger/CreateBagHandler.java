@@ -47,8 +47,11 @@ public class CreateBagHandler implements Handler<RoutingContext> {
     OptionalInt max = datastore.find(FruitBag.class).field("session").equal(fruitSession).asList().stream()
       .mapToInt(s -> s.getNumber() == null ? 0 : s.getNumber())
       .max();
-    FruitBag newBag = FruitBag.create(fruitSession, max.orElse(0) + 1);
+    int bagCount = max.orElse(0) + 1;
+    FruitBag newBag = FruitBag.create(fruitSession, bagCount);
+    fruitSession.setBagCount(bagCount);
     datastore.save(newBag);
+    datastore.save(fruitSession);
     ctx.response().end(newBag.getNumber().toString());
   }
 }
