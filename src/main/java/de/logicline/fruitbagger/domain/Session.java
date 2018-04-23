@@ -10,71 +10,71 @@ import java.util.Date;
 
 @Entity("sessions")
 public class Session {
-  @Id
-  private ObjectId id;
-  private Integer number;
-  @Reference
-  private FruitUser user;
-  private Date startDate;
-  private Date finishDate;
-  private Integer fruitIndex;
+    @Id
+    private ObjectId id;
+    private Integer number;
+    @Reference
+    private FruitUser user;
+    private Date startDate;
+    private Date finishDate;
+    private Integer fruitIndex;
 
-  private Integer lookAhead;
+    private Integer lookAhead;
 
-  private Integer bagCount;
+    private Integer bagCount;
 
-  public static Session create(FruitUser user, Integer number){
-    Session newSession = new Session();
-    newSession.id = new ObjectId();
-    newSession.number = number;
-    newSession.user = user;
-    newSession.startDate = Date.from(Instant.now());
-    newSession.fruitIndex = 0;
-    newSession.lookAhead = 4;
-    return newSession;
-  }
+    public static Session create(FruitUser user, Integer number) {
+        Session newSession = new Session();
+        newSession.id = new ObjectId();
+        newSession.number = number;
+        newSession.user = user;
+        newSession.startDate = Date.from(Instant.now());
+        newSession.fruitIndex = 0;
+        newSession.lookAhead = 4;
+        return newSession;
+    }
 
-  public ObjectId getId() {
-    return id;
-  }
+    public ObjectId getId() {
+        return id;
+    }
 
-  public FruitUser getUser() {
-    return user;
-  }
+    public FruitUser getUser() {
+        return user;
+    }
 
-  public Date getStartDate() {
-    return startDate;
-  }
+    public Date getStartDate() {
+        return startDate;
+    }
 
-  public Date getFinishDate() {
-    return finishDate;
-  }
+    public Date getFinishDate() {
+        return finishDate;
+    }
 
-  public Integer getFruitIndex() {
-    return fruitIndex;
-  }
+    public Integer getFruitIndex() {
+        return fruitIndex;
+    }
 
-  public Integer getLookAhead() {
-    return lookAhead;
-  }
+    public Integer getLookAhead() {
+        return lookAhead;
+    }
 
-  public void incrementIndex(){
-    this.fruitIndex++;
-  }
+    public void incrementIndex() {
+        this.fruitIndex++;
+    }
 
-  public Integer getNumber() {
-    return number;
-  }
+    public Integer getNumber() {
+        return number;
+    }
 
-  public Integer getBagCount() {
-    return bagCount;
-  }
+    public Integer getBagCount() {
+        return bagCount;
+    }
 
-  public void closeNow(){
-    this.finishDate = Date.from(Instant.now());
-  }
+    public void setBagCount(int bagCount) {
+        this.bagCount = bagCount;
+    }
 
-  public void setBagCount(int bagCount) {
-    this.bagCount = bagCount;
-  }
+    public void closeNow() {
+        this.finishDate = Date.from(Instant.now());
+    }
 }

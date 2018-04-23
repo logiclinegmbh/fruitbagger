@@ -1,55 +1,60 @@
 <html>
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
-        integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+          integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css"
+          crossorigin="anonymous">
 </head>
 <body>
 {{> header}}
 <main role="main" class="container">
 
-  <div class="starter-template">
-    <h1>
-      Hello hackers!
-    </h1>
-    <p>
-      Welcome to the logicline fruitbagger challenge!
-    </p>
-    <p>
-      Your mission is to build an algorithm (program or function) that can optimize packing fruit from a conveyor belt
-      into
-      bags to be sent off to retailers, optimizing for a largest number of bags.
-    </p>
-    <ul>
-      <li>Each bag has to weight at least a certain amount, but any excess is lost profit since that weight could be
-        used to
-        fill another bag.
-      </li>
-      <li>Your bagging machine has always a lookahead of n fruits from the queue and may choose to add any of
-        these n fruits to the (single) bag that is being processed. It cannot look beyond the n first elements in the
-        queue.
-      </li>
-      <li> The program always knows exactly how much weight there already is in the bag. Another way to visualize this
-        is
-        having a conveyor belt with a loading area of size n at the end, from where a fruit has to be taken before a new
-        fruit arrives:
-        <p><img src="static/bagger.png"></p>
-      </li>
-      <li>
-        Any leftover fruit and a non-full bag at the end are discarded.
-      </li>
-    </ul>
-    <p>
-      You have to use a restful API to open a session, open a bag, supply fruits etc. You will receive further
-      instructions after you've signed up!
-    </p>
-    <h2>
-      Example
-    </h2>
-    <pre>
+    <div class="starter-template">
+        <h1>
+            Hello hackers!
+        </h1>
+        <p>
+            Welcome to the logicline fruitbagger challenge!
+        </p>
+        <p>
+            Your mission is to build an algorithm (program or function) that can optimize packing fruit from a conveyor
+            belt
+            into
+            bags to be sent off to retailers, optimizing for a largest number of bags.
+        </p>
+        <ul>
+            <li>Each bag has to weight at least a certain amount, but any excess is lost profit since that weight could
+                be
+                used to
+                fill another bag.
+            </li>
+            <li>Your bagging machine has always a lookahead of n fruits from the queue and may choose to add any of
+                these n fruits to the (single) bag that is being processed. It cannot look beyond the n first elements
+                in the
+                queue.
+            </li>
+            <li> The program always knows exactly how much weight there already is in the bag. Another way to visualize
+                this
+                is
+                having a conveyor belt with a loading area of size n at the end, from where a fruit has to be taken
+                before a new
+                fruit arrives:
+                <p><img src="static/bagger.png"></p>
+            </li>
+            <li>
+                Any leftover fruit and a non-full bag at the end are discarded.
+            </li>
+        </ul>
+        <p>
+            You have to use a restful API to open a session, open a bag, supply fruits etc. You will receive further
+            instructions after you've signed up!
+        </p>
+        <h2>
+            Example
+        </h2>
+        <pre>
   Total weight 1000, lookahead of 3 and fruit queue:
   [171,163,172,196,156,175,162,176,155,182,189,142,161,160,152,162,174,172,191,185]
 
@@ -58,10 +63,10 @@
                           [162,    155,182,189,    161,160]
                                                           [152,162,174,172,191,185]
     </pre>
-    <a href="/profile" id="github-button" class="btn btn-social btn-github">
-      <i class="fa fa-github"></i> Sign in with GitHub
-    </a>
-  </div>
+        <a href="/profile" id="github-button" class="btn btn-social btn-github">
+            <i class="fa fa-github"></i> Sign in with GitHub
+        </a>
+    </div>
 </main>
 {{> scripts}}
 </body>

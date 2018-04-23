@@ -1,10 +1,10 @@
 plugins {
-  id 'application'
-  id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
 repositories {
-  jcenter()
+    jcenter()
 }
 
 version = '1.0'
@@ -17,38 +17,38 @@ def watchForChange = 'src/**/*'
 def doOnChange = './gradlew classes'
 
 dependencies {
-  compile 'org.mongodb.morphia:morphia:1.3.2'
-  compile 'io.vertx:vertx-web:3.5.0'
-  compile 'io.vertx:vertx-auth-oauth2:3.5.0'
-  compile "io.vertx:vertx-core:$vertxVersion"
-  // https://mvnrepository.com/artifact/io.vertx/vertx-web-templ-handlebars
-  compile group: 'io.vertx', name: 'vertx-web-templ-handlebars', version: '3.5.0'
-  // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-  compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-  // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
-  compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.9.1'
-  testCompile "junit:junit:4.12"
-  testCompile "io.vertx:vertx-unit:$vertxVersion"
+    compile 'org.mongodb.morphia:morphia:1.3.2'
+    compile 'io.vertx:vertx-web:3.5.0'
+    compile 'io.vertx:vertx-auth-oauth2:3.5.0'
+    compile "io.vertx:vertx-core:$vertxVersion"
+    // https://mvnrepository.com/artifact/io.vertx/vertx-web-templ-handlebars
+    compile group: 'io.vertx', name: 'vertx-web-templ-handlebars', version: '3.5.0'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.9.1'
+    testCompile "junit:junit:4.12"
+    testCompile "io.vertx:vertx-unit:$vertxVersion"
 }
 
 shadowJar {
-  classifier = 'fat'
-  manifest {
-      attributes "Main-Verticle": mainVerticleName
-  }
-  mergeServiceFiles {
-    include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
-  }
+    classifier = 'fat'
+    manifest {
+        attributes "Main-Verticle": mainVerticleName
+    }
+    mergeServiceFiles {
+        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+    }
 }
 
 run {
-  args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
+    args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '4.0'
+    gradleVersion = '4.0'
 }
 
 task stage {
-  dependsOn shadowJar
+    dependsOn shadowJar
 }

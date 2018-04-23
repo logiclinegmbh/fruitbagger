@@ -9,27 +9,28 @@ import java.util.UUID;
 
 @Entity("users")
 public class FruitUser implements Serializable {
-  @Id
-  private ObjectId id;
-  private String email;
-  private String apiToken;
+    @Id
+    private ObjectId id;
+    private String email;
+    private String apiToken;
 
-  public FruitUser(){}
+    public FruitUser() {
+    }
 
-  public FruitUser(String email) {
-    this.email = email;
-    resetApiKey();
-  }
+    public FruitUser(String email) {
+        this.email = email;
+        resetApiKey();
+    }
 
-  public String getApiToken() {
-    return apiToken;
-  }
+    public String getApiToken() {
+        return apiToken;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public void resetApiKey() {
-    this.apiToken = UUID.randomUUID().toString();
-  }
+    public void resetApiKey() {
+        this.apiToken = UUID.randomUUID().toString();
+    }
 }

@@ -12,48 +12,48 @@ import java.util.Set;
 
 @Entity("fruitbags")
 public class FruitBag {
-  @Id
-  private ObjectId id;
-  private Integer number;
-  @Reference
-  private Session session;
-  private Set<Integer> fruits;
-  private Date startDate;
-  private Date finishDate;
+    @Id
+    private ObjectId id;
+    private Integer number;
+    @Reference
+    private Session session;
+    private Set<Integer> fruits;
+    private Date startDate;
+    private Date finishDate;
 
-  public Session getSession() {
-    return session;
-  }
+    public static FruitBag create(Session session, int number) {
+        FruitBag newBag = new FruitBag();
+        newBag.id = new ObjectId();
+        newBag.number = number;
+        newBag.session = session;
+        newBag.startDate = Date.from(Instant.now());
+        newBag.fruits = new HashSet<>();
+        return newBag;
+    }
 
-  public Date getStartDate() {
-    return startDate;
-  }
+    public Session getSession() {
+        return session;
+    }
 
-  public Date getFinishDate() {
-    return finishDate;
-  }
+    public Date getStartDate() {
+        return startDate;
+    }
 
-  public Set<Integer> getFruits() {
-    if(this.fruits == null)
-      this.fruits = new HashSet<>();
-    return fruits;
-  }
+    public Date getFinishDate() {
+        return finishDate;
+    }
 
-  public Integer getNumber() {
-    return number;
-  }
+    public Set<Integer> getFruits() {
+        if (this.fruits == null)
+            this.fruits = new HashSet<>();
+        return fruits;
+    }
 
-  public static FruitBag create(Session session, int number) {
-    FruitBag newBag = new FruitBag();
-    newBag.id = new ObjectId();
-    newBag.number = number;
-    newBag.session = session;
-    newBag.startDate = Date.from(Instant.now());
-    newBag.fruits = new HashSet<>();
-    return newBag;
-  }
+    public Integer getNumber() {
+        return number;
+    }
 
-  public void closeNow() {
-    this.finishDate = Date.from(Instant.now());
-  }
+    public void closeNow() {
+        this.finishDate = Date.from(Instant.now());
+    }
 }

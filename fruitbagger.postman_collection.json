@@ -1,113 +1,113 @@
 {
-	"variables": [],
-	"info": {
-		"name": "fruitbagger",
-		"_postman_id": "8d701214-82fd-78c6-f99c-cb5226b48a97",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "create a session",
-			"request": {
-				"url": "http://localhost:8080/api/session",
-				"method": "POST",
-				"header": [
-					{
-						"key": "auth",
-						"value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "get a fruit from the queue",
-			"request": {
-				"url": "http://localhost:8080/api/fruits/1",
-				"method": "GET",
-				"header": [
-					{
-						"key": "auth",
-						"value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "create bag",
-			"request": {
-				"url": "http://localhost:8080/api/bag/1",
-				"method": "POST",
-				"header": [
-					{
-						"key": "auth",
-						"value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "bag a fruit",
-			"request": {
-				"url": "http://localhost:8080/api/bagging/1/1/1",
-				"method": "POST",
-				"header": [
-					{
-						"key": "auth",
-						"value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "close a bag",
-			"request": {
-				"url": "http://localhost:8080/api/bag/1/1",
-				"method": "PUT",
-				"header": [
-					{
-						"key": "auth",
-						"value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "close a session",
-			"request": {
-				"url": "http://localhost:8080/api/session/1",
-				"method": "PUT",
-				"header": [
-					{
-						"key": "auth",
-						"value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		}
-	]
+    "variables": [],
+    "info": {
+        "name": "fruitbagger",
+        "_postman_id": "8d701214-82fd-78c6-f99c-cb5226b48a97",
+        "description": "",
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "create a session",
+            "request": {
+                "url": "http://localhost:8080/api/session",
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "auth",
+                        "value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
+                        "description": ""
+                    }
+                ],
+                "body": {},
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "get a fruit from the queue",
+            "request": {
+                "url": "http://localhost:8080/api/fruits/1",
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "auth",
+                        "value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
+                        "description": ""
+                    }
+                ],
+                "body": {},
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "create bag",
+            "request": {
+                "url": "http://localhost:8080/api/bag/1",
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "auth",
+                        "value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
+                        "description": ""
+                    }
+                ],
+                "body": {},
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "bag a fruit",
+            "request": {
+                "url": "http://localhost:8080/api/bagging/1/1/1",
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "auth",
+                        "value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
+                        "description": ""
+                    }
+                ],
+                "body": {},
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "close a bag",
+            "request": {
+                "url": "http://localhost:8080/api/bag/1/1",
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "auth",
+                        "value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
+                        "description": ""
+                    }
+                ],
+                "body": {},
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "close a session",
+            "request": {
+                "url": "http://localhost:8080/api/session/1",
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "auth",
+                        "value": "04e92c7c-26de-4a47-83d8-4b72a836a6ad",
+                        "description": ""
+                    }
+                ],
+                "body": {},
+                "description": ""
+            },
+            "response": []
+        }
+    ]
 }
