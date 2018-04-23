@@ -1,6 +1,7 @@
 package de.logicline.fruitbagger;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.auth.oauth2.providers.GithubAuth;
@@ -26,7 +27,7 @@ public class MainVerticle extends AbstractVerticle {
     final Map<String, String> env = System.getenv();
     final Morphia morphia = new Morphia();
     morphia.mapPackage("de.logicline.fruitbagger.domain");
-    MongoClient mongoClient = new MongoClient(env.get("MONGODB_URI"));
+    MongoClient mongoClient = new MongoClient(new MongoClientURI(env.get("MONGODB_URI")));
     final Datastore datastore = morphia.createDatastore(mongoClient, env.get("MONGO_DBNAME"));
     datastore.ensureIndexes();
 
