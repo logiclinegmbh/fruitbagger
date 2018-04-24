@@ -25,7 +25,7 @@
 <p></p>
 <h2>Close a bag</h2>
 <p>When the bag is full, be sure to close the bag before opening a new one:</p>
-<pre>PUT /api/bag/{bag-id}</pre>
+<pre>PUT /api/bag/{session-id}/{bag-id}</pre>
 <p>Keep in mind that this will return a HTTP 400 error when the bag weighs less than the required minimum weight!</p>
 <h2>Close the session</h2>
 <p>When you have packed all fruits into bags, close your session:</p>
