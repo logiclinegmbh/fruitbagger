@@ -68,6 +68,7 @@ public class MainVerticle extends AbstractVerticle {
         router.get("/profile").handler(new ProfileHandler(datastore));
         router.get("/profile/resetapikey").handler(new ResetApiKeyHandler(datastore));
 
+        router.get("/dashboard").handler(new DashboardHandler(datastore));
         router.route("/api/*").handler(new ApiUserRetriever(datastore));
         router.post("/api/session").handler(new CreateSessionHandler(datastore));
         router.get("/api/fruits/:sessionId").handler(new RetrieveFruitHandler(datastore));
