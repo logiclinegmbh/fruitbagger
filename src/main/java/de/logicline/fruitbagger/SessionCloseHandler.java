@@ -1,6 +1,7 @@
 package de.logicline.fruitbagger;
 
 import de.logicline.fruitbagger.domain.FruitBag;
+import de.logicline.fruitbagger.domain.FruitQueue;
 import de.logicline.fruitbagger.domain.FruitUser;
 import de.logicline.fruitbagger.domain.Session;
 import io.vertx.core.Handler;
@@ -38,10 +39,20 @@ public class SessionCloseHandler implements Handler<RoutingContext> {
         fruitSession.closeNow();
 
         List<FruitBag> bags = datastore.find(FruitBag.class).field("session").equal(fruitSession).asList();
+        bags.removeIf(this::bagWeighsLessThan1000g);
         bags.stream().forEach(fruitBag -> fruitBag.closeNow());
+        fruitSession.setBagCount(bags.size());
 
         datastore.save(fruitSessions);
         datastore.save(bags);
         ctx.response().end();
+    }
+
+    private boolean bagWeighsLessThan1000g(FruitBag bag) {
+        int sum = 0;
+        for (int fruit : bag.getFruits()) {
+            sum += FruitQueue.QUEUE[fruit];
+        }
+        return sum < 1000;
     }
 }
