@@ -26,7 +26,7 @@ public class DashboardHandler implements Handler<RoutingContext> {
     @Override
     public void handle(RoutingContext ctx) {
         List<Session> fruitsessions = datastore.find(Session.class)
-            .field("finishDate").exists()
+            .field("finishDate").exists().field("bagCount").notEqual(0)
             .order(Sort.descending("bagCount"))
             .asList();
         ctx.put("entry", fruitsessions);
