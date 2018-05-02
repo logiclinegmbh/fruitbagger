@@ -65,13 +65,13 @@ class MainVerticle() : AbstractVerticle() {
 
     private fun setUpApiHandlers() {
         router?.run {
-            route("/api/*").handler(ApiUserRetriever(datastore))
-            post("/api/session").handler(CreateSessionHandler(datastore))
-            get("/api/fruits/:sessionId").handler(RetrieveFruitHandler(datastore))
-            post("/api/bag/:sessionId").handler(CreateBagHandler(datastore!!))
-            post("/api/bagging/:sessionId/:bagId/:fruitIndex").handler(BaggingHandler(datastore))
-            put("/api/bag/:sessionId/:bagId").handler(BagCloseHandler(datastore))
-            put("/api/session/:sessionId").handler(SessionCloseHandler(datastore))
+            route("/api/*").blockingHandler(ApiUserRetriever(datastore),false)
+            post("/api/session").blockingHandler(CreateSessionHandler(datastore),false)
+            get("/api/fruits/:sessionId").blockingHandler(RetrieveFruitHandler(datastore),false)
+            post("/api/bag/:sessionId").blockingHandler(CreateBagHandler(datastore!!),false)
+            post("/api/bagging/:sessionId/:bagId/:fruitIndex").blockingHandler(BaggingHandler(datastore),false)
+            put("/api/bag/:sessionId/:bagId").blockingHandler(BagCloseHandler(datastore),false)
+            put("/api/session/:sessionId").blockingHandler(SessionCloseHandler(datastore),false)
         }
     }
 
