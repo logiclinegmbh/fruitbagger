@@ -1,3 +1,13 @@
+buildscript {
+    ext.kotlin_version = '1.2.41'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 plugins {
     id 'application'
     id 'com.github.johnrengelman.shadow' version '1.2.3'
@@ -6,7 +16,17 @@ plugins {
 repositories {
     jcenter()
 }
-
+apply plugin: 'kotlin'
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
 version = '1.0'
 sourceCompatibility = '1.8'
 mainClassName = 'io.vertx.core.Launcher'
@@ -29,6 +49,7 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.9.1'
     testCompile "junit:junit:4.12"
     testCompile "io.vertx:vertx-unit:$vertxVersion"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
 shadowJar {
@@ -52,3 +73,4 @@ task wrapper(type: Wrapper) {
 task stage {
     dependsOn shadowJar
 }
+

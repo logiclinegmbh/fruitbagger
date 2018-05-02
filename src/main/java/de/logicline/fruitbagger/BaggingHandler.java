@@ -41,7 +41,7 @@ public class BaggingHandler implements Handler<RoutingContext> {
         }
 
         if (fruitIndex >= fruitSession.getFruitIndex()) {
-            ctx.fail(new Exception("You're trying to bag fruit that I havent't even given to you. Thought I wouldn't realize??"));
+            ctx.fail(new Exception("You're trying to bag fruit that I haven't even given to you. Thought I wouldn't realize??"));
             return;
         }
 
@@ -61,8 +61,8 @@ public class BaggingHandler implements Handler<RoutingContext> {
         }
 
         Optional<FruitBag> bagWithFruit = bags.stream().filter(b -> b.getFruits() != null && b.getFruits().contains(fruitIndex)).findAny();
-        if (bagWithFruit.isPresent()) {
-            ctx.fail(new Exception("Bag " + bagWithFruit.get().getNumber() + " already contains that fruit. Get up earlier to fool me!"));
+            if (bagWithFruit.isPresent()) {
+                ctx.fail(new Exception("Bag " + bagWithFruit.get().getNumber() + " already contains that fruit. Get up earlier to fool me!"));
             return;
         }
 
