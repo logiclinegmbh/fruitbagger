@@ -9,8 +9,11 @@ import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.*
 import io.vertx.ext.web.sstore.LocalSessionStore
 import io.vertx.ext.web.templ.HandlebarsTemplateEngine
+import org.apache.logging.log4j.core.util.IOUtils
 import org.mongodb.morphia.Datastore
 import org.mongodb.morphia.Morphia
+import java.io.InputStreamReader
+import java.util.function.Consumer
 
 
 /*
@@ -20,8 +23,9 @@ class MainVerticle() : AbstractVerticle() {
 
     private val engine = HandlebarsTemplateEngine.create()
     var datastore: Datastore? = null
-    var router:Router? = null
+    var router: Router? = null
     var env: MutableMap<String, String> = HashMap()
+    var fruits: List<Int> = ArrayList()
     @Throws(Exception::class)
     override fun start() {
         env = System.getenv()
@@ -31,13 +35,22 @@ class MainVerticle() : AbstractVerticle() {
         val mongoClient = MongoClient(MongoClientURI(env["MONGODB_URI"]))
         createDataStore(morphia, mongoClient)
         val authProvider = createRouter()
+        loadFruits()
         setUpBaseRoute()
         setUpProfileRoutes(authProvider)
         setUpDashboardHandler()
         setUpApiHandlers()
-
         vertx.createHttpServer().requestHandler { router!!.accept(it) }
             .listen(Integer.valueOf(env["PORT"]))
+    }
+
+    private fun loadFruits() {
+        fruits = ArrayList()
+        var file = this.javaClass.getResourceAsStream("/fruits.txt")
+        var lines = IOUtils.toString(InputStreamReader(file)).split("\n").toList()
+        var tmp = ArrayList<Int>()
+        lines.forEach(Consumer { t -> if (t != "") tmp.add(Integer(t).toInt()) })
+        fruits = tmp.toList()
     }
 
     private fun createDataStore(morphia: Morphia, mongoClient: MongoClient) {
@@ -65,13 +78,13 @@ class MainVerticle() : AbstractVerticle() {
 
     private fun setUpApiHandlers() {
         router?.run {
-            route("/api/*").blockingHandler(ApiUserRetriever(datastore),false)
-            post("/api/session").blockingHandler(CreateSessionHandler(datastore),false)
-            get("/api/fruits/:sessionId").blockingHandler(RetrieveFruitHandler(datastore),false)
-            post("/api/bag/:sessionId").blockingHandler(CreateBagHandler(datastore!!),false)
-            post("/api/bagging/:sessionId/:bagId/:fruitIndex").blockingHandler(BaggingHandler(datastore),false)
-            put("/api/bag/:sessionId/:bagId").blockingHandler(BagCloseHandler(datastore),false)
-            put("/api/session/:sessionId").blockingHandler(SessionCloseHandler(datastore),false)
+            route("/api/*").blockingHandler(ApiUserRetriever(datastore), false)
+            post("/api/session").blockingHandler(CreateSessionHandler(datastore), false)
+            get("/api/fruits/:sessionId").blockingHandler(RetrieveFruitHandler(datastore!!, fruits), false)
+            post("/api/bag/:sessionId").blockingHandler(CreateBagHandler(datastore!!), false)
+            post("/api/bagging/:sessionId/:bagId/:fruitIndex").blockingHandler(BaggingHandler(datastore), false)
+            put("/api/bag/:sessionId/:bagId").blockingHandler(BagCloseHandler(datastore!!, fruits), false)
+            put("/api/session/:sessionId").blockingHandler(SessionCloseHandler(datastore!!, fruits), false)
         }
     }
 
@@ -86,7 +99,7 @@ class MainVerticle() : AbstractVerticle() {
                     .addAuthority("user:email")
             ).handler(UserRetriever(datastore))
             // Entry point to the application, this will render a custom template.
-            get("/profile").blockingHandler(ProfileHandler(datastore),false)
+            get("/profile").blockingHandler(ProfileHandler(datastore), false)
             get("/profile/resetapikey").handler(ResetApiKeyHandler(datastore))
         }
     }
