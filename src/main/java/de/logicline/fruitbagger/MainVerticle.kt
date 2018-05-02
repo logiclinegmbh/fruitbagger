@@ -90,14 +90,14 @@ class MainVerticle() : AbstractVerticle() {
 
     private fun setUpProfileRoutes(authProvider: OAuth2Auth?) {
         router?.run {
-            route("/profile").handler(
+            route("/profile").blockingHandler(
                 OAuth2AuthHandler.create(authProvider, env["OAUTH_GITHUB_CALLBACK_URL"])
                     // we now configure the oauth2 handler, it will setup the callback handler
                     // as expected by your oauth2 provider.
                     .setupCallback(router?.route("/callback"))
                     // for this resource we require that users have the authority to retrieve the user emails
-                    .addAuthority("user:email")
-            ).handler(UserRetriever(datastore))
+                    .addAuthority("user:email"),false
+            ).blockingHandler(UserRetriever(datastore!!),false)
             // Entry point to the application, this will render a custom template.
             get("/profile").blockingHandler(ProfileHandler(datastore), false)
             get("/profile/resetapikey").handler(ResetApiKeyHandler(datastore))
