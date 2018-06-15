@@ -61,8 +61,8 @@ public class BaggingHandler implements Handler<RoutingContext> {
         }
 
         Optional<FruitBag> bagWithFruit = bags.stream().filter(b -> b.getFruits() != null && b.getFruits().contains(fruitIndex)).findAny();
-            if (bagWithFruit.isPresent()) {
-                ctx.fail(new Exception("Bag " + bagWithFruit.get().getNumber() + " already contains that fruit. Get up earlier to fool me!"));
+        if (bagWithFruit.isPresent()) {
+            ctx.fail(new Exception("Bag " + bagWithFruit.get().getNumber() + " already contains that fruit. Get up earlier to fool me!"));
             return;
         }
 

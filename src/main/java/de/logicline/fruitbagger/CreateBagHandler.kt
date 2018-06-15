@@ -10,11 +10,17 @@ import org.mongodb.morphia.Datastore
 class CreateBagHandler(private val datastore: Datastore) : Handler<RoutingContext> {
 
     override fun handle(ctx: RoutingContext) {
-        val sessionId = ctx.request().getParam("sessionId")
-        val fruitUser = ctx.session().get<FruitUser>("fruitUser")
+        val sessionId = ctx.request()
+            .getParam("sessionId")
+        val fruitUser = ctx.session()
+            .get<FruitUser>("fruitUser")
 
-        val fruitSessions = datastore.find(Session::class.java).field("user").equal(fruitUser).field("number")
-            .equal(Integer.valueOf(sessionId)).asList()
+        val fruitSessions = datastore.find(Session::class.java)
+            .field("user")
+            .equal(fruitUser)
+            .field("number")
+            .equal(Integer.valueOf(sessionId))
+            .asList()
         if (fruitSessions.isEmpty()) {
             ctx.fail(Exception("Session not found. Create a new one."))
             return
@@ -27,7 +33,10 @@ class CreateBagHandler(private val datastore: Datastore) : Handler<RoutingContex
         }
 
         // get all bags
-        val allBags = datastore.find(FruitBag::class.java).field("session").equal(fruitSession).asList()
+        val allBags = datastore.find(FruitBag::class.java)
+            .field("session")
+            .equal(fruitSession)
+            .asList()
 
         // filter bags that are note finished
         var emptyBags = allBags.filter { bag -> bag.finishDate == null }
@@ -46,6 +55,7 @@ class CreateBagHandler(private val datastore: Datastore) : Handler<RoutingContex
         fruitSession.bagCount = bagCount
         datastore.save(newBag)
         datastore.save(fruitSession)
-        ctx.response().end(newBag.number!!.toString())
+        ctx.response()
+            .end(newBag.number!!.toString())
     }
 }

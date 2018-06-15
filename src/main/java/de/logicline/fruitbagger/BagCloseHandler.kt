@@ -12,10 +12,15 @@ class BagCloseHandler(private val datastore: Datastore, private val fruits: List
     override fun handle(ctx: RoutingContext) {
         val sessionId = Integer.valueOf(ctx.request().getParam("sessionId"))
         val bagId = Integer.valueOf(ctx.request().getParam("bagId"))
-        val fruitUser = ctx.session().get<FruitUser>("fruitUser")
+        val fruitUser = ctx.session()
+            .get<FruitUser>("fruitUser")
 
-        val fruitSessions = datastore.find(Session::class.java).field("user").equal(fruitUser).field("number")
-                .equal(sessionId).asList()
+        val fruitSessions = datastore.find(Session::class.java)
+            .field("user")
+            .equal(fruitUser)
+            .field("number")
+            .equal(sessionId)
+            .asList()
 
         if (fruitSessions.isEmpty()) {
             ctx.fail(Exception("Session not found."))
@@ -24,8 +29,12 @@ class BagCloseHandler(private val datastore: Datastore, private val fruits: List
 
         val fruitSession = fruitSessions[0]
 
-        val bags = datastore.find(FruitBag::class.java).field("session").equal(fruitSession).field("number")
-                .equal(bagId).asList()
+        val bags = datastore.find(FruitBag::class.java)
+            .field("session")
+            .equal(fruitSession)
+            .field("number")
+            .equal(bagId)
+            .asList()
         if (bags.isEmpty()) {
             ctx.fail(Exception("Bag not found!"))
             return
@@ -49,6 +58,7 @@ class BagCloseHandler(private val datastore: Datastore, private val fruits: List
 
         bag.closeNow()
         datastore.save(bag)
-        ctx.response().end()
+        ctx.response()
+            .end()
     }
 }

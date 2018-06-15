@@ -7,17 +7,22 @@ import io.vertx.core.Handler
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
 import org.mongodb.morphia.Datastore
-
-import java.util.HashMap
+import java.util.*
 
 class RetrieveFruitHandler(private val datastore: Datastore, private val fruits: List<Int>) : Handler<RoutingContext> {
 
     override fun handle(ctx: RoutingContext) {
-        val sessionId = ctx.request().getParam("sessionId")
-        val fruitUser = ctx.session().get<FruitUser>("fruitUser")
+        val sessionId = ctx.request()
+            .getParam("sessionId")
+        val fruitUser = ctx.session()
+            .get<FruitUser>("fruitUser")
 
-        val fruitSessions = datastore.find(Session::class.java).field("user").equal(fruitUser).field("number")
-                .equal(Integer.valueOf(sessionId)).asList()
+        val fruitSessions = datastore.find(Session::class.java)
+            .field("user")
+            .equal(fruitUser)
+            .field("number")
+            .equal(Integer.valueOf(sessionId))
+            .asList()
 
         if (fruitSessions.isEmpty()) {
             ctx.fail(Exception("Session not found. Create a new one."))
@@ -26,11 +31,14 @@ class RetrieveFruitHandler(private val datastore: Datastore, private val fruits:
 
         val fruitSession = fruitSessions[0]
 
-        val allBags = datastore.find(FruitBag::class.java).field("session").equal(fruitSession).asList()
+        val allBags = datastore.find(FruitBag::class.java)
+            .field("session")
+            .equal(fruitSession)
+            .asList()
         val totalSessionFruits = allBags.stream()
-                .filter { bag -> bag.fruits != null && !bag.fruits.isEmpty() }
-                .mapToInt { bag -> bag.fruits.size }
-                .sum()
+            .filter { bag -> bag.fruits != null && !bag.fruits.isEmpty() }
+            .mapToInt { bag -> bag.fruits.size }
+            .sum()
         val currentIndex = fruitSession.fruitIndex
 
         if (currentIndex!! - totalSessionFruits >= fruitSession.lookAhead) {
@@ -49,7 +57,8 @@ class RetrieveFruitHandler(private val datastore: Datastore, private val fruits:
         val responseMap = HashMap<String, Any>()
         responseMap[currentIndex.toString()] = weight
 
-        ctx.response().end(JsonObject.mapFrom(responseMap).encodePrettily())
+        ctx.response()
+            .end(JsonObject.mapFrom(responseMap).encodePrettily())
     }
 
 }

@@ -40,14 +40,17 @@ class MainVerticle() : AbstractVerticle() {
         setUpProfileRoutes(authProvider)
         setUpDashboardHandler()
         setUpApiHandlers()
-        vertx.createHttpServer().requestHandler { router!!.accept(it) }
+        vertx.createHttpServer()
+            .requestHandler { router!!.accept(it) }
             .listen(Integer.valueOf(env["PORT"]))
     }
 
     private fun loadFruits() {
         fruits = ArrayList()
         var file = this.javaClass.getResourceAsStream("/fruits.txt")
-        var lines = IOUtils.toString(InputStreamReader(file)).split("\n").toList()
+        var lines = IOUtils.toString(InputStreamReader(file))
+            .split("\n")
+            .toList()
         var tmp = ArrayList<Int>()
         lines.forEach(Consumer { t -> if (t != "") tmp.add(Integer(t).toInt()) })
         fruits = tmp.toList()
@@ -61,19 +64,25 @@ class MainVerticle() : AbstractVerticle() {
     private fun createRouter(): OAuth2Auth? {
         router = Router.router(vertx)
         // We need cookies and sessions
-        router?.route()?.handler(CookieHandler.create())
-        router?.route()?.handler(SessionHandler.create(LocalSessionStore.create(vertx)))
+        router?.route()
+            ?.handler(CookieHandler.create())
+        router?.route()
+            ?.handler(SessionHandler.create(LocalSessionStore.create(vertx)))
         // Simple auth service which uses a GitHub to authenticate the user
         val authProvider = GithubAuth.create(vertx, env["CLIENT_ID"], env["CLIENT_SECRET"])
         // We need a user session handler too to make sure the user is stored in the session between requests
-        router?.route()?.handler(UserSessionHandler.create(authProvider))
-        router?.route("/static/*")?.handler(StaticHandler.create().setCachingEnabled(false))
-        router?.route()?.failureHandler(FailureHandler())
+        router?.route()
+            ?.handler(UserSessionHandler.create(authProvider))
+        router?.route("/static/*")
+            ?.handler(StaticHandler.create().setCachingEnabled(false))
+        router?.route()
+            ?.failureHandler(FailureHandler())
         return authProvider
     }
 
     private fun setUpDashboardHandler() {
-        router?.get("/dashboard")?.handler(DashboardHandler(datastore!!))
+        router?.get("/dashboard")
+            ?.handler(DashboardHandler(datastore!!))
     }
 
     private fun setUpApiHandlers() {
@@ -96,8 +105,9 @@ class MainVerticle() : AbstractVerticle() {
                     // as expected by your oauth2 provider.
                     .setupCallback(router?.route("/callback"))
                     // for this resource we require that users have the authority to retrieve the user emails
-                    .addAuthority("user:email"),false
-            ).blockingHandler(UserRetriever(datastore!!),false)
+                    .addAuthority("user:email"), false
+            )
+                .blockingHandler(UserRetriever(datastore!!), false)
             // Entry point to the application, this will render a custom template.
             get("/profile").blockingHandler(ProfileHandler(datastore), false)
             get("/profile/resetapikey").handler(ResetApiKeyHandler(datastore))
@@ -105,16 +115,17 @@ class MainVerticle() : AbstractVerticle() {
     }
 
     private fun setUpBaseRoute() {
-        router!!.route("/").handler { ctx ->
-            engine.render(ctx, "views", "/index.hbs") { res3 ->
-                if (res3.succeeded()) {
-                    ctx.response()
-                        .putHeader("Content-Type", "text/html")
-                        .end(res3.result())
-                } else {
-                    ctx.fail(res3.cause())
+        router!!.route("/")
+            .handler { ctx ->
+                engine.render(ctx, "views", "/index.hbs") { res3 ->
+                    if (res3.succeeded()) {
+                        ctx.response()
+                            .putHeader("Content-Type", "text/html")
+                            .end(res3.result())
+                    } else {
+                        ctx.fail(res3.cause())
+                    }
                 }
             }
-        }
     }
 }

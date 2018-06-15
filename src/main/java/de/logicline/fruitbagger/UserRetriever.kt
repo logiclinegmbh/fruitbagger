@@ -15,7 +15,8 @@ class UserRetriever(private val datastore: Datastore) : Handler<RoutingContext> 
         val user = ctx.user() as AccessToken
         user.userInfo { res ->
             if (res.failed()) {
-                ctx.session().destroy()
+                ctx.session()
+                    .destroy()
                 ctx.fail(res.cause())
                 ctx.next()
                 return@userInfo
@@ -33,15 +34,19 @@ class UserRetriever(private val datastore: Datastore) : Handler<RoutingContext> 
     private fun registerUser(user: AccessToken, ctx: RoutingContext) {
         user.fetch("https://api.github.com/user/emails") { res ->
             if (res.failed()) {
-                ctx.session().destroy()
+                ctx.session()
+                    .destroy()
                 ctx.fail(res.cause())
                 return@fetch
             }
-            val emails = res.result().jsonArray()
-            val getPrimaryUserMail = emails.stream().filter { email ->
-                val email1 = email as JsonObject
-                email1.containsKey("primary") && email1.getBoolean("primary")!!
-            }.findFirst()
+            val emails = res.result()
+                .jsonArray()
+            val getPrimaryUserMail = emails.stream()
+                .filter { email ->
+                    val email1 = email as JsonObject
+                    email1.containsKey("primary") && email1.getBoolean("primary")!!
+                }
+                .findFirst()
 
             if (getPrimaryUserMail.isPresent) {
                 addUserToDb(getPrimaryUserMail, ctx)
@@ -54,14 +59,18 @@ class UserRetriever(private val datastore: Datastore) : Handler<RoutingContext> 
     private fun addUserToDb(getPrimaryUserMail: Optional<Any>, ctx: RoutingContext) {
         val primaryEmail = getPrimaryUserMail.get() as JsonObject
         val email = primaryEmail.getString("email")
-        val users = datastore.find(FruitUser::class.java).field("email").equalIgnoreCase(email).asList()
+        val users = datastore.find(FruitUser::class.java)
+            .field("email")
+            .equalIgnoreCase(email)
+            .asList()
         var dbuser: FruitUser?
         if (users.isEmpty()) {
             dbuser = FruitUser(email)
             datastore.save(dbuser)
         } else
             dbuser = users[0]
-        ctx.session().put("fruitUser", dbuser)
+        ctx.session()
+            .put("fruitUser", dbuser)
         ctx.next()
     }
 }

@@ -11,10 +11,15 @@ class SessionCloseHandler(private val datastore: Datastore, private val fruits: 
 
     override fun handle(ctx: RoutingContext) {
         val sessionId = Integer.valueOf(ctx.request().getParam("sessionId"))
-        val fruitUser = ctx.session().get<FruitUser>("fruitUser")
+        val fruitUser = ctx.session()
+            .get<FruitUser>("fruitUser")
 
-        val fruitSessions = datastore.find(Session::class.java).field("user").equal(fruitUser).field("number")
-                .equal(sessionId).asList()
+        val fruitSessions = datastore.find(Session::class.java)
+            .field("user")
+            .equal(fruitUser)
+            .field("number")
+            .equal(sessionId)
+            .asList()
 
         if (fruitSessions.isEmpty()) {
             ctx.fail(Exception("Session not found. Can't close."))
@@ -30,14 +35,19 @@ class SessionCloseHandler(private val datastore: Datastore, private val fruits: 
 
         fruitSession.closeNow()
 
-        val bags = datastore.find(FruitBag::class.java).field("session").equal(fruitSession).asList()
+        val bags = datastore.find(FruitBag::class.java)
+            .field("session")
+            .equal(fruitSession)
+            .asList()
         bags.removeIf({ this.bagWeighsLessThan1000g(it) })
-        bags.stream().forEach { fruitBag -> fruitBag.closeNow() }
+        bags.stream()
+            .forEach { fruitBag -> fruitBag.closeNow() }
         fruitSession.bagCount = bags.size
 
         datastore.save(fruitSessions)
         datastore.save(bags)
-        ctx.response().end()
+        ctx.response()
+            .end()
     }
 
     private fun bagWeighsLessThan1000g(bag: FruitBag): Boolean {

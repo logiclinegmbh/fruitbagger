@@ -1,0 +1,8 @@
+<code_scheme name="Default" version="173">
+  <MarkdownNavigatorCodeStyleSettings>
+    <option name="RIGHT_MARGIN" value="72" />
+  </MarkdownNavigatorCodeStyleSettings>
+  <codeStyleSettings language="kotlin">
+    <option name="METHOD_CALL_CHAIN_WRAP" value="2" />
+  </codeStyleSettings>
+</code_scheme>

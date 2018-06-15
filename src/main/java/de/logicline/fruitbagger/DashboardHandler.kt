@@ -22,9 +22,12 @@ class DashboardHandler(private val datastore: Datastore) : Handler<RoutingContex
 
     private fun getSessions(): List<Session>? {
         val fruitsessions = datastore.find<Session>(Session::class.java)
-                .field("finishDate").exists().field("bagCount").notEqual(0)
-                .order(Sort.descending("bagCount"))
-                .asList()
+            .field("finishDate")
+            .exists()
+            .field("bagCount")
+            .notEqual(0)
+            .order(Sort.descending("bagCount"))
+            .asList()
         return fruitsessions
     }
 
@@ -32,8 +35,8 @@ class DashboardHandler(private val datastore: Datastore) : Handler<RoutingContex
         engine.render(ctx, "views", "/dashboard.hbs") { res3 ->
             if (res3.succeeded()) {
                 ctx.response()
-                        .putHeader("Content-Type", "text/html")
-                        .end(res3.result())
+                    .putHeader("Content-Type", "text/html")
+                    .end(res3.result())
             } else {
                 ctx.fail(res3.cause())
             }
@@ -45,8 +48,8 @@ class DashboardHandler(private val datastore: Datastore) : Handler<RoutingContex
      */
     private fun addAddOneFilter() {
         engine.handlebars
-                .registerHelper<Any>("addone") { _, options ->
-                    (Integer.valueOf(options.fn(this).toString()) + 1).toString()
-                }
+            .registerHelper<Any>("addone") { _, options ->
+                (Integer.valueOf(options.fn(this).toString()) + 1).toString()
+            }
     }
 }
